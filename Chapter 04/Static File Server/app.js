@@ -1,13 +1,11 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
+var logger = require('morgan');
 
 var app = express();
 
-app.use(function (req, res, next) {
-    console.log(new Date() + ' ' + req.url);
-    next();
-});
+app.use(logger('dev'));
 
 app.use(function (req, res, next) {
     var filePath = path.join(__dirname, 'static', req.url);
