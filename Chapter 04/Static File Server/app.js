@@ -5,7 +5,14 @@ var logger = require('morgan');
 var app = express();
 
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'static'), {
+    fallthrough: false
+}));
+
+app.use(function (req, res, err, next) {
+    console.error(err);
+    next();
+});
 
 app.use(function (req, res) {
     res.status(404).send('File Not Found!');
