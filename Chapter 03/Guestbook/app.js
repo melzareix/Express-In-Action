@@ -12,7 +12,9 @@ var entries = [];
 app.locals.entries = entries;
 
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({extended: 'false'}));
+app.use(bodyParser.urlencoded({
+    extended: 'false'
+}));
 
 app.get('/', function (req, res) {
     res.render('index');
