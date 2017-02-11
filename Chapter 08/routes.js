@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const User = require('./models/user');
 const router = express.Router();
 
@@ -22,5 +23,40 @@ router.get('/', function (req, res, next) {
                 users: users
             });
         });
+});
+
+router.get('/signup', function (req, res) {
+    return res.render('signup');
+});
+
+router.post('/signup', function (req, res, next) {
+    var username = req.body.username;
+    var password = req.body.password;
+    console.log(next);
+    User.findOne({
+        username: username
+    }, function (err, usr) {
+        if (err) {
+            return next(err);
+        }
+        if (usr) {
+            req.flash("error", "Username already exists");
+            return res.redirect("/signup");
+        }
+        var newUser = new User({
+            username: username,
+            password: password
+        });
+        newUser.save(next);
+    });
+}, passport.authenticate('login', {
+    successRedirect: "/",
+    failureRedirect: "/signup",
+    failureFlash: true
+}));
+
+router.use(function (err, req, res, next) {
+    console.log(err);
+    next();
 });
 module.exports = router;
