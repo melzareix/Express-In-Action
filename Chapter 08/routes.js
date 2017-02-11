@@ -71,9 +71,21 @@ router.get("/logout", function (req, res) {
     res.redirect("/");
 });
 
+var ensureAuthenticated = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.flash("info", "You must be logged in to see this page.");
+    res.redirect("/login");
+};
+
+router.get('/edit', ensureAuthenticated, function (req, res, next) {
+    res.render('edit');
+});
+
 router.use(function (err, req, res, next) {
     console.log(err);
-    next();
+    return next();
 });
 
 
