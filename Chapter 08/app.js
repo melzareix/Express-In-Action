@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/test');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(express.static(path.join(__dirname, 'static')));
 app.use(bodyParser.urlencoded({
     extended: false
 }));

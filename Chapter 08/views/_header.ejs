@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Learn about me</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Learn About Me</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <% if (currentUser) {%>
+                <li><a href="/edit">Hello, <%= currentUser.name() %></a></li>
+                <li><a href="/logout">Logout</a></li>
+            <% } else {%>
+                <li><a href="/signup">Signup</a></li>
+                <li><a href="/login">Login</a></li>
+            <% }%>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <% errors.forEach(function(error) { %>
+        <div class="alert alert-danger" role="alert">
+        <%= error %>
+        </div>
+    <% }) %>
+  
+  <% infos.forEach(function(info) { %>
+    <div class="alert alert-info" role="alert">
+      <%= info %>
+    </div>
+  <% }) %>

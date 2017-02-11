@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bycrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
 const SALT_FACTOR = 12;
 
 var userSchema = mongoose.Schema({
@@ -39,6 +39,10 @@ userSchema.pre('save', function (done) {
         });
     });
 });
+
+userSchema.methods.name = function () {
+    return this.displayName || this.username;
+};
 
 userSchema.methods.checkPassword = function (guess, done) {
     bcrypt.compare(guess, this.password, function (err, res) {
