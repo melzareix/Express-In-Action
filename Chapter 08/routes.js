@@ -55,8 +55,26 @@ router.post('/signup', function (req, res, next) {
     failureFlash: true
 }));
 
+
+router.get('/login', function (req, res) {
+    res.render('login');
+});
+
+router.post('/login', passport.authenticate('login', {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true
+}));
+
+router.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
+});
+
 router.use(function (err, req, res, next) {
     console.log(err);
     next();
 });
+
+
 module.exports = router;
